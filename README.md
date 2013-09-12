@@ -32,4 +32,11 @@ Ant Build Distribution
 ant dist
 ```
 
+Proxy Support
+=============
+```
+java -Dhttps.proxyHost=192.168.168.1 -Dhttps.proxyPort=8080 -jar akadvh.jar
+```
+
+
 
