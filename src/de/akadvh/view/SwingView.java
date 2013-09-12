@@ -415,7 +415,7 @@ public class SwingView {
                         for (int j = 0; j < clmCnt; j++) {
                                 if (model.getValueAt(i, j) != null){
                                   String value = model.getValueAt(i, j).toString();
-                                  bw.write(value);
+                                  bw.write("\"" + value + "\"");
                                 }
                                 if(j+1 != clmCnt)
                                   bw.write(";");
