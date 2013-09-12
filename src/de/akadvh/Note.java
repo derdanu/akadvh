@@ -67,7 +67,7 @@ public class Note {
 	}
 	
 	public void setNote(String note) {
-		this.note = note;
+		this.note = note.replace(".", ",");
 	}
 	
 	public String toString() {
