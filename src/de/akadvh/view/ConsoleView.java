@@ -41,7 +41,7 @@ public class ConsoleView {
 	private String modulname;
 	private Scanner sc;
 	
-	public ConsoleView(String username, String password, String modulname, Boolean verbose) {
+	public ConsoleView(String username, String password, String modulname, Boolean noten, Boolean verbose) {
 
 		this.username = username;
 		this.password = password;
@@ -71,9 +71,11 @@ public class ConsoleView {
 			e1.printStackTrace();
 		}
 	    
-	    if (modulname == null) {
+	    if (modulname == null && noten == false) {
 		    System.out.println("M für Modul, N für Notenübersicht: ");
 		    this.todo = sc.nextLine();	    	
+	    } else if (noten == true) {
+	    	this.todo = "N";
 	    } else {
 	    	this.todo = "M";
 	    }

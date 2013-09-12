@@ -39,11 +39,12 @@ public class Main {
 	public static void main(String[] args) {
 
 		Options options = new Options();
-		options.addOption("c", "console", false, "Consolenmodus");
 		options.addOption("u", "user", true, "Benutzername");
 		options.addOption("p", "pass", true, "Passwort");
+		options.addOption("c", "console", false, "Consolenmodus");
 		options.addOption("v", "verbose", false, "Mehr Ausgabe");
 		options.addOption("m", "modul", true, "Modul");
+		options.addOption("n", "noten", false, "Notenuebersicht in CSV erstellen");
 		options.addOption("version", false, "Version");
 		options.addOption("h", "help", false, "Hilfe");
 
@@ -73,6 +74,7 @@ public class Main {
 				ConsoleView cv = new ConsoleView(cmd.getOptionValue("user"),
 												cmd.getOptionValue("pass"),
 												cmd.getOptionValue("modul"),
+												cmd.hasOption("noten"),
 												cmd.hasOption("verbose"));
 				
 
