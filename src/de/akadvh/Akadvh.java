@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class Akadvh {
 
-	private static final String version = "0.4";
+	private static final String version = "0.5";
 	
 	private String loginQueryString;
 	private ResponseParser resP = new ResponseParser();
