@@ -9,11 +9,17 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.Vector;
 
 import javax.swing.JTree;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -24,6 +30,7 @@ import de.akadvh.Modul;
 import de.akadvh.Module;
 import de.akadvh.Note;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -35,6 +42,7 @@ import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -334,6 +342,37 @@ public class SwingView {
 		});
 		mnAktion.add(mntmBenutzerdaten);
 		
+		JMenuItem mntmCSV = new JMenuItem("CSV Export");
+		mntmCSV.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				JFileChooser chooser = new JFileChooser();
+				
+		        int ret = chooser.showSaveDialog(null);
+		        
+		        if(ret == JFileChooser.APPROVE_OPTION)
+		        {
+		             
+		            try {
+						exportTableDataToCSV(table, chooser.getSelectedFile().getAbsoluteFile());
+						JOptionPane.showMessageDialog(frmAkadVhc,
+					    		    "CSV-Datei " + chooser.getSelectedFile().getName() + " wurde erstellt",					    		    
+					    		    "Information",
+					    		    JOptionPane.INFORMATION_MESSAGE);
+						
+					} catch (IOException e1) {
+		        		JOptionPane.showMessageDialog(frmAkadVhc,
+		    	    		    e1.getMessage(),
+		    	    		    "Fehler",
+		    	    		    JOptionPane.ERROR_MESSAGE);
+		            }
+					
+		        }
+				
+			}
+		});
+		mnAktion.add(mntmCSV);
+		
 		JMenuItem mntmVersion = new JMenuItem("Version");
 		mntmVersion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -357,4 +396,37 @@ public class SwingView {
 		
 	}
 
+	public void exportTableDataToCSV(JTable table, File file) throws IOException {
+        
+                file.createNewFile();
+
+                BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+
+                TableModel model = table.getModel();
+                for (int h = 0 ; h < model.getColumnCount();h++){
+                  bw.write(model.getColumnName(h).toString());
+                  if (h+1 != model.getColumnCount())
+                    bw.write(";");
+                }
+                bw.newLine();
+                
+                for (int clmCnt = model.getColumnCount(), rowCnt = model
+                                .getRowCount(), i = 0; i < rowCnt; i++) {
+                        for (int j = 0; j < clmCnt; j++) {
+                                if (model.getValueAt(i, j) != null){
+                                  String value = model.getValueAt(i, j).toString();
+                                  bw.write(value);
+                                }
+                                if(j+1 != clmCnt)
+                                  bw.write(";");
+                        }
+                        bw.newLine();
+                }
+
+                bw.flush();
+                bw.close();
+
+        
+}
+	
 }
