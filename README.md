@@ -19,6 +19,7 @@ usage: java -jar akadvh.jar
  -c,--console       Consolenmodus
  -h,--help          Hilfe
  -m,--modul <arg>   Modul
+ -n,--noten         Notenuebersicht in CSV erstellen
  -p,--pass <arg>    Passwort
  -u,--user <arg>    Benutzername
  -v,--verbose       Mehr Ausgabe
