@@ -24,3 +24,12 @@ usage: java -jar akadvh.jar
  -v,--verbose       Mehr Ausgabe
  -version           Version
 ```
+
+Ant Build Distribution
+======================
+
+```
+ant dist
+```
+
+
