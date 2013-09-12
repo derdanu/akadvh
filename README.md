@@ -1,7 +1,18 @@
-akadvh
+AkadVH
 ======
 
-Akavh Vh Java Library und Console + GUI Client zum bequemen Abrufen der Noten
+AkadVH Java Library und Console + GUI Client zum bequemen Abrufen der Noten
+
+GUI
+==
+
+```
+java -jar akadvh.jar
+java -jar akadvh.jar -u benutzername -p passwort
+```
+
+Console
+=======
 
 ```
 usage: java -jar akadvh.jar
