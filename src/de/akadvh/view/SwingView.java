@@ -377,7 +377,7 @@ public class SwingView {
 		mntmVersion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frmAkadVhc,
-		    		    "Version: " + Akadvh.getVersion() + "\n" + "(C) Daniel Falkner",
+		    		    "Version: " + Akadvh.getVersion() + "\n" + "(C) 2013 Daniel Falkner",
 		    		    "Version",
 		    		    JOptionPane.INFORMATION_MESSAGE);
 			}
