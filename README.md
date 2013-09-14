@@ -21,11 +21,13 @@ usage: java -jar akadvh.jar
  -c,--console       Consolenmodus
  -h,--help          Hilfe
  -m,--modul <arg>   Modul
- -n,--noten         Notenuebersicht in CSV erstellen
+ -n,--noten         Notenuebersicht erstellen
  -p,--pass <arg>    Passwort
+ -t,--termin        Terminuebersicht (angemeldete Module) downloaden
  -u,--user <arg>    Benutzername
  -v,--verbose       Mehr Ausgabe
  -version           Version
+
 ```
 
 Ant Build Distribution
