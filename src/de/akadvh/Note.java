@@ -27,10 +27,24 @@ public class Note {
 	private String anmerkung;
 	private String note;
 	
+	/**
+	 * 
+	 * Konstruktor
+	 * 
+	 */
 	public Note() {
 		
 	}
 	
+	/**
+	 * 
+	 * Konstruktor
+	 * 
+	 * @param bezeichnung
+	 * @param datum
+	 * @param anmerkung
+	 * @param note
+	 */
 	public Note(String bezeichnung, String datum, String anmerkung, String note) {
 		this.bezeichnung = bezeichnung;
 		this.datum = datum;

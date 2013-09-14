@@ -30,23 +30,53 @@ public class Modul {
 	
 	}
 	
+	/**
+	 * Konstruktor
+	 * 
+	 * @param name Modulname
+	 */
 	public Modul(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * 
+	 * Konstruktor
+	 * 
+	 * @param name Modulname
+	 * @param beschreibung Beschreibung
+	 */
 	public Modul(String name, String beschreibung) {
 		this.name = name;
 		this.beschreibung = beschreibung;
 	}
 	
+	/**
+	 * 
+	 * Note hinzufügen
+	 * 
+	 * @param note Note
+	 */
 	public void addNote(Note note) {
 		this.noten.addNote(note);
 	}
 	
+	/**
+	 * 
+	 * Noten hinzufügen
+	 * 
+	 * @param noten Noten
+	 */
 	public void setNoten(Noten noten) {
 		this.noten = noten;
 	}
 	
+	/**
+	 * 
+	 * Noten des Moduls zurückgeben
+	 * 
+	 * @return Noten
+	 */
 	public Noten getNoten() {
 		return this.noten;
 	}

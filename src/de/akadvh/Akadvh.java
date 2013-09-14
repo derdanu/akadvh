@@ -33,6 +33,15 @@ public class Akadvh {
 	private Request request = new Request();
 	
 	
+	/**
+	 * 
+	 * Konstruktor
+	 * 
+	 * @param ac AkadvhCredentials
+	 * 
+	 * @throws UnsupportedEncodingException
+	 * @throws MalformedURLException
+	 */
 	public Akadvh(AkadvhCredentials ac) throws UnsupportedEncodingException, MalformedURLException {
 		
 		this.loginQueryString = ac.getLoginQueryString();
@@ -40,6 +49,13 @@ public class Akadvh {
 	}
 	
 	
+	/**
+	 * 
+	 * Module holen
+	 * 
+	 * @return Module
+	 * @throws Exception
+	 */
 	public Module holeModule() throws Exception {
 	
 		String r = getFirstModulPage();
@@ -63,6 +79,14 @@ public class Akadvh {
 
 	}
 	
+	/**
+	 * 
+	 * Noten für ein Modul holen 
+	 * 
+	 * @param modul Modul
+	 * @return Modul
+	 * @throws Exception
+	 */
 	public Modul holeNoten(Modul modul) throws Exception {
 		
 		String r = getFirstModulPage();
@@ -106,6 +130,13 @@ public class Akadvh {
 		
 	}
 	
+	/**
+	 * 
+	 * Terminübersicht holen
+	 * 
+	 * @return String Base64 Codierter Binary String des Excel Dokuments
+	 * @throws Exception
+	 */
 	public String holeTerminUebersicht() throws Exception {
 		
 		String r = getFrameAfterLogin();
@@ -177,6 +208,13 @@ public class Akadvh {
 				
 	}
 	
+	/**
+	 * 
+	 * Erste Moduleseite
+	 * 
+	 * @return String	Htmlcode
+	 * @throws Exception
+	 */
 	private String getFirstModulPage() throws Exception {
 		
 		String r = getFrameAfterLogin();
@@ -194,6 +232,14 @@ public class Akadvh {
 		return  request.Get(frameUri);
 	}
 
+	/**
+	 * 
+	 * Frame nach Einloggen zurückgeben.
+	 * Einloggen etc wird hier erledigt.
+	 * 
+	 * @return String 	Htmlcode
+	 * @throws Exception
+	 */
 	private String getFrameAfterLogin() throws Exception {
 		
 		String r = request.Get("/cgi/WebObjects.dll/AKADFrontend");
@@ -217,6 +263,12 @@ public class Akadvh {
 		
 	}
 
+	/**
+	 * 
+	 * Gibt die Version der Library zurück
+	 * 
+	 * @return String	Versionsnummer
+	 */
 	public static String getVersion() {
 		return version;
 	}

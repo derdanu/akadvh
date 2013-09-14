@@ -27,6 +27,13 @@ public class AkadvhCredentials {
 	private String user;
 	private String pass;
 	
+	/**
+	 * 
+	 * Konstruktor
+	 * 
+	 * @param user Benutzername
+	 * @param pass Passwort
+	 */
 	public AkadvhCredentials(String user, String pass) {
 		
 		this.user = user;
@@ -34,6 +41,13 @@ public class AkadvhCredentials {
 	
 	}
 	
+	/**
+	 * 
+	 * QueryString zum Anmelden generieren und zurückgeben.
+	 * 
+	 * @return String	QueryString
+	 * @throws UnsupportedEncodingException
+	 */
 	public String getLoginQueryString() throws UnsupportedEncodingException {
 		
 		QueryString qs = new QueryString();

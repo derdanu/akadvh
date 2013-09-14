@@ -29,12 +29,27 @@ public class QueryString {
 
 	private Map<String, String> options = new HashMap<String, String>();
 	
+	/**
+	 * 
+	 * Option zum QueryString hinzufügen
+	 * key=value
+	 * 
+	 * @param key	Schlüssel
+	 * @param value	Wert
+	 */
 	public void addOption(String key, String value) {
 		
 		options.put(key, value);
 		
 	}
 	
+	/**
+	 * 
+	 * QueryString erstellen und zurückgeben
+	 * 
+	 * @return String	QueryString
+	 * @throws UnsupportedEncodingException
+	 */
 	public String getQueryString() throws UnsupportedEncodingException {
 	
 		StringBuffer sb = new StringBuffer();

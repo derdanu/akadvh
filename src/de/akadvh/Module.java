@@ -28,14 +28,34 @@ public class Module implements Iterable<Modul> {
 
 	private List<Modul> module = new ArrayList<Modul>();
 	
+	/**
+	 * Modul hinzufügen
+	 * 
+	 * @param modul Modul
+	 */
 	public void addModul(Modul modul) {
 		this.module.add(modul);
 	}
 
+	/**
+	 * 
+	 * Modul zurückgeben anhand des Index
+	 * 
+	 * @param index
+	 * @return	Modul
+	 */
 	public Modul getModul(int index) {
 		return this.module.get(index);		
 	}
 
+	/**
+	 * 
+	 * Modul anhand des Namens zurückgeben
+	 * 
+	 * @param name Name des Moduls
+	 * @return Modul
+	 * @throws Exception
+	 */
 	public Modul getModulByName(String name) throws Exception {
 		
 		for (Modul m: module) {
@@ -46,6 +66,12 @@ public class Module implements Iterable<Modul> {
 		
 	}
 
+	/**
+	 * 
+	 * Anzahl der Module
+	 * 
+	 * @return	int	Anzahl
+	 */
 	public int Anzahl() {
 		return module.size();
 	}

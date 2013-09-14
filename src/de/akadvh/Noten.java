@@ -28,21 +28,47 @@ public class Noten implements Iterable<Note>{
 
 	private List<Note> noten = new ArrayList<Note>();
 	
+	/**
+	 * 
+	 * Note hinzufügen
+	 * 
+	 * @param note Note
+	 */
 	public void addNote(Note note) {
 		this.noten.add(note);
 	}
 
+	/**
+	 * 
+	 * Note zurückgeben
+	 * 
+	 * @param index
+	 * @return Note
+	 */
 	public Note getNote(int index) {
 		return this.noten.get(index);		
 	}
 	
+	/**
+	 * 
+	 * Noten als Liste zurückgeben
+	 * 
+	 * @return List<Note>
+	 */
 	public List<Note> getNoten() {
 		return noten;
 	}
 	
+	/**
+	 * 
+	 * Anzahl der Noten
+	 * 
+	 * @return int
+	 */
 	public int Anzahl() {
 		return noten.size();
 	}
+	
 	public String toString() {
 		
 		String r = new String();

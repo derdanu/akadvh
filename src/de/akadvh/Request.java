@@ -42,12 +42,27 @@ public class Request {
 	private URL baseUrl;
 	private String serverCookies;
 	
+	/**
+	 * 
+	 * Konstruktor
+	 * 
+	 * @throws MalformedURLException
+	 */
 	public Request() throws MalformedURLException {
 		
 		this.baseUrl = new URL("https://www.akadvh.de");
 		this.serverCookies = new String();
 	}
 	
+	/**
+	 * 
+	 * HTTP Post
+	 * 
+	 * @param uri	URI Relativ zur BaseUrl
+	 * @param postVar	Variablen ?key=value&key2=value2
+	 * @return	String 	Htmlausgabe
+	 * @throws IOException
+	 */
 	public String Post(String uri, String postVar) throws IOException {
 		
 		URL url = new URL(this.baseUrl + uri);
@@ -93,6 +108,14 @@ public class Request {
 		
 	}
 	
+	/**
+	 * 
+	 * HTML Get
+	 * 
+	 * @param uri URI Relativ zur BaseUrl
+	 * @return String 	Htmlausgabe
+	 * @throws IOException
+	 */
 	public String Get(String uri) throws IOException {
 		
 		URL url = new URL(this.baseUrl + uri);
@@ -159,6 +182,12 @@ public class Request {
 		}
 	}
 	
+	/**
+	 * 
+	 * Cookieparser
+	 * 
+	 * @param connection
+	 */
 	private void CookieParser(HttpURLConnection connection) {
 		
 	    serverCookies = connection.getHeaderField("set-cookie");
