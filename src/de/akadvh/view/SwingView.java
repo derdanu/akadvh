@@ -12,8 +12,10 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.Vector;
@@ -46,6 +48,7 @@ import javax.swing.table.TableModel;
 import javax.swing.JProgressBar;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import javax.xml.bind.DatatypeConverter;
 
 
 /**
@@ -165,7 +168,6 @@ public class SwingView {
 							
 									@Override
 									public void run() {
-										// TODO Auto-generated method stub
 										
 										progressBar.setValue(0);
 										progressBar.setVisible(true);
@@ -342,7 +344,7 @@ public class SwingView {
 		});
 		mnAktion.add(mntmBenutzerdaten);
 		
-		JMenuItem mntmCSV = new JMenuItem("CSV Export");
+		JMenuItem mntmCSV = new JMenuItem("Exportiere Notenansicht als CSV");
 		mntmCSV.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -372,6 +374,75 @@ public class SwingView {
 			}
 		});
 		mnAktion.add(mntmCSV);
+
+		JMenuItem mntmNoten = new JMenuItem("Exportiere angemeldete Termine als Excel");
+		mntmNoten.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				btnHoleNote.setEnabled(false);
+		        mnAktion.setEnabled(false);
+				
+				final JFileChooser chooser = new JFileChooser();
+				
+		        int ret = chooser.showSaveDialog(null);
+		        
+		        if(ret == JFileChooser.APPROVE_OPTION)
+		        {
+
+		        	try {
+		        		
+		             	class ReaderThread  implements Runnable {
+							
+							@Override
+							public void run() {
+								
+								try {
+									
+									String document = vh.holeTerminUebersicht();
+						    		OutputStream writer = new FileOutputStream(chooser.getSelectedFile().getAbsoluteFile());
+						    		writer.write(DatatypeConverter.parseBase64Binary(document));
+						    		writer.flush();
+						    		writer.close();
+						    		
+						    		JOptionPane.showMessageDialog(frmAkadVhc,
+							    		    "Excel-Datei " + chooser.getSelectedFile().getName() + " wurde erstellt",					    		    
+							    		    "Information",
+							    		    JOptionPane.INFORMATION_MESSAGE);
+						    		
+								} catch (Exception e) {
+									JOptionPane.showMessageDialog(frmAkadVhc,
+					    	    		    e.getMessage(),
+					    	    		    "Fehler",
+					    	    		    JOptionPane.ERROR_MESSAGE);
+									
+								} finally {
+									
+									btnHoleNote.setEnabled(true);
+						    		mnAktion.setEnabled(true);
+								}
+								
+				    		
+								
+						
+							}
+							
+		            	}
+								
+		             	new Thread(new ReaderThread()).start();
+		        		
+		        	} catch (Exception e1) {
+		        		JOptionPane.showMessageDialog(frmAkadVhc,
+		    	    		    e1.getMessage(),
+		    	    		    "Fehler",
+		    	    		    JOptionPane.ERROR_MESSAGE);
+		        		
+		        	}
+		        	
+		        }
+				
+			}
+		});
+		mnAktion.add(mntmNoten);
 		
 		JMenuItem mntmVersion = new JMenuItem("Version");
 		mntmVersion.addActionListener(new ActionListener() {
