@@ -458,6 +458,14 @@ public class SwingView {
 		});
 		mnAktion.add(mntmNoten);
 		
+		JMenuItem mntmDelete = new JMenuItem("Tabelle leeren");
+		mntmDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				((DefaultTableModel)table.getModel()).setRowCount(0);
+			}
+		});
+		mnAktion.add(mntmDelete);
+		
 		JMenuItem mntmVersion = new JMenuItem("Version");
 		mntmVersion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
