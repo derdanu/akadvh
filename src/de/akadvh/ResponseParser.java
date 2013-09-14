@@ -30,6 +30,13 @@ import org.jsoup.select.Elements;
  */
 public class ResponseParser {
 
+	/**
+	 * 
+	 * Gibt die erste Formular Aktion Uri zurück.
+	 * 
+	 * @param html
+	 * @return String 	Uri
+	 */
 	public String parseHTMLFormActionUrl(String html) {
 		
 	    Document doc = Jsoup.parse(html);
@@ -41,6 +48,14 @@ public class ResponseParser {
 	    
 	}
 	
+	/**
+	 * 
+	 * Src Uri eines Frames von einem Frameset zurückgeben.
+	 * 
+	 * @param html
+	 * @param framename Name des Frames Html Attribut name
+	 * @return	String	Uri
+	 */
 	public String parseHTMLFrameSrc(String html, String framename) {
 		
 	    Document doc = Jsoup.parse(html);
@@ -52,6 +67,14 @@ public class ResponseParser {
 	    
 	}
 	
+	/**
+	 * 
+	 * Src Uri eines IFrames zurückgeben
+	 * 
+	 * @param html	
+	 * @param iframename	Name des IFrames Html Attribut name
+	 * @return	String 	Uri
+	 */
 	public String parseHTMLiFrameSrc(String html, String iframename) {
 		
 	    Document doc = Jsoup.parse(html);
@@ -63,6 +86,14 @@ public class ResponseParser {
 	    
 	}
 	
+	/**
+	 * 
+	 * Uri Liste aller Hyperlinks mit einem Html target Arrtibut zurückgeben.
+	 * 
+	 * @param html
+	 * @param target	Name des a target Namen
+	 * @return	List<String>	Liste mit Uri
+	 */
 	public List<String> parseHTMLLinksWithTarget(String html, String target) {
 		
 		List<String> links = new ArrayList<String>();
@@ -79,6 +110,15 @@ public class ResponseParser {
 	    
 	}
 	
+	/**
+	 * 
+	 * Uri eines Links mit einem Bild zurückgeben
+	 * 
+	 * @param html
+	 * @param image	Name des Bildes
+	 * @return	String	Uri
+	 * @throws Exception
+	 */
 	public String parseHTMLLinkWithImage(String html, String image) throws Exception {
 		
 	    Document doc = Jsoup.parse(html);
@@ -96,6 +136,15 @@ public class ResponseParser {
         throw new Exception("Link nicht gefunden");
 	}
 	
+	/**
+	 * 
+	 * Html Input Attribute mit Typ gewissem image zurückgeben.
+	 * 
+	 * @param html
+	 * @param image	Name des Bildes
+	 * @return	String Uri
+	 * @throws Exception
+	 */
 	public String parseHTMLInputWithImageName(String html, String image) throws Exception {
 		
 	    Document doc = Jsoup.parse(html);
@@ -113,6 +162,13 @@ public class ResponseParser {
         throw new Exception("Name nicht gefunden");
 	}
 	
+	/**
+	 * 
+	 * Liste mit Checkbox Namen zurückgeben
+	 * 
+	 * @param html
+	 * @return	List<String>	Alle Attribute vom Typ namen
+	 */
 	public List<String> parseHTMLCheckboxNames(String html) {
 		
 		List<String> cbNames = new ArrayList<String>();
@@ -131,6 +187,13 @@ public class ResponseParser {
 	}
 	
 	
+	/**
+	 * 
+	 * Liste mit HTML Select namen zurückgeben
+	 * 
+	 * @param html
+	 * @return List<String>  Alle Attribute vom Typ namen
+	 */
 	public List<String> parseHTMLSelectNames(String html) {
 		
 		List<String> selectNames = new ArrayList<String>();
@@ -148,6 +211,13 @@ public class ResponseParser {
 		return selectNames;
 	}
 	
+	/**
+	 * 
+	 * Namen des ersten Inputs vom Typ Submit zurückgeben. 
+	 * 
+	 * @param html
+	 * @return	String Name
+	 */
 	public String parseHTMLSubmitName(String html) {
 		
 		Document doc = Jsoup.parse(html);
@@ -158,6 +228,13 @@ public class ResponseParser {
 
 	}
 	
+	/**
+	 * 
+	 * Modul Seite parsen und alle Link Uri zurückgeben
+	 * 
+	 * @param html
+	 * @return List<String> Uri
+	 */
 	public List<String> parseModulePages(String html) {
 		
 		Document doc = Jsoup.parse(html);
@@ -178,7 +255,13 @@ public class ResponseParser {
         
 	}
 	
-
+	/**
+	 * 
+	 * Modul Tabelle Parsen und Liste mit Modul zurückgeben.
+	 * 
+	 * @param html
+	 * @return	List<Modul> Liste mit Modulen auf dieser Seite
+	 */
 	public List<Modul> parseModuleTable(String html) {
 	    
 		Document doc = Jsoup.parse(html);
@@ -204,6 +287,15 @@ public class ResponseParser {
         return module;
 	}
 	
+	/**
+	 * 
+	 * Modul Uri zu einem Modul zuückgeben
+	 * 
+	 * @param html
+	 * @param modul	Modul
+	 * @return String Uri
+	 * @throws Exception
+	 */
 	public String parseModuleTableFindModulUrl(String html, Modul modul) throws Exception {
 		
 		Document doc = Jsoup.parse(html);
@@ -227,6 +319,13 @@ public class ResponseParser {
 
 	}
 	
+	/**
+	 * 
+	 * Noten zu einem Modul parsen
+	 * 
+	 * @param html
+	 * @return Noten
+	 */
 	public Noten parseModuleNoten(String html) {
 		
 		Document doc = Jsoup.parse(html);
