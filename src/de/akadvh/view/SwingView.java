@@ -356,9 +356,15 @@ public class SwingView {
 		        {
 		             
 		            try {
-						exportTableDataToCSV(table, chooser.getSelectedFile().getAbsoluteFile());
+		            	
+		            	String filename = chooser.getSelectedFile().getAbsoluteFile().toString();
+						if (!filename.endsWith(".csv")) {
+							filename += ".csv";										
+						}
+		            	
+						exportTableDataToCSV(table, new File(filename));
 						JOptionPane.showMessageDialog(frmAkadVhc,
-					    		    "CSV-Datei " + chooser.getSelectedFile().getName() + " wurde erstellt",					    		    
+					    		    "CSV-Datei " + filename + " wurde erstellt.",					    		    
 					    		    "Information",
 					    		    JOptionPane.INFORMATION_MESSAGE);
 						
@@ -398,14 +404,19 @@ public class SwingView {
 								
 								try {
 									
+									String filename = chooser.getSelectedFile().getAbsoluteFile().toString();
+									if (!filename.endsWith(".xls")) {
+										filename += ".xls";										
+									}
+									
 									String document = vh.holeTerminUebersicht();
-						    		OutputStream writer = new FileOutputStream(chooser.getSelectedFile().getAbsoluteFile());
+						    		OutputStream writer = new FileOutputStream(new File(filename));
 						    		writer.write(DatatypeConverter.parseBase64Binary(document));
 						    		writer.flush();
 						    		writer.close();
 						    		
 						    		JOptionPane.showMessageDialog(frmAkadVhc,
-							    		    "Excel-Datei " + chooser.getSelectedFile().getName() + " wurde erstellt",					    		    
+							    		    "Excel-Datei " + filename + " wurde erstellt.",					    		    
 							    		    "Information",
 							    		    JOptionPane.INFORMATION_MESSAGE);
 						    		
