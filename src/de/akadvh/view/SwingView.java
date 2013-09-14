@@ -449,6 +449,9 @@ public class SwingView {
 		        		
 		        	}
 		        	
+		        } else {
+		        	btnHoleNote.setEnabled(true);
+		    		mnAktion.setEnabled(true);		        	
 		        }
 				
 			}
