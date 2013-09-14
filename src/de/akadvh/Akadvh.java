@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class Akadvh {
 
-	private static final String version = "0.5";
+	private static final String version = "0.6";
 	
 	private String loginQueryString;
 	private ResponseParser resP = new ResponseParser();
@@ -106,26 +106,81 @@ public class Akadvh {
 		
 	}
 	
-	private String getFirstModulPage() throws Exception {
+	public String holeTerminUebersicht() throws Exception {
 		
-		String r = request.Get("/cgi/WebObjects.dll/AKADFrontend");
-				
-		String loginUri = resP.parseHTMLFormActionUrl(r);
-		
+		String r = getFrameAfterLogin();
 		String frameUri = null;
-
+		
 		try {
-			r = request.Post(loginUri, loginQueryString);
-			frameUri = resP.parseHTMLFrameSrc(r, "AKAD_inhalt");			
+			frameUri = resP.parseHTMLLinkWithImage(r, "navi1_lernraum.gif");
 		} catch (Exception e) {
-			throw new Exception("Benutername und/oder Passwort falsch");
+			throw e;
 		}
-
-
+		
 		r = request.Get(frameUri);
 		frameUri = resP.parseHTMLFrameSrc(r, "AKAD_header");
-			 
+
 		r = request.Get(frameUri);
+		
+		try {
+			frameUri = resP.parseHTMLLinkWithImage(r, "termine_o.gif");
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		r = request.Get(frameUri);
+		frameUri = resP.parseHTMLFrameSrc(r, "AKAD_fcontent");
+		
+		r = request.Get(frameUri);
+		String postUri = resP.parseHTMLFormActionUrl(r);
+
+		List<String> cbNames = resP.parseHTMLCheckboxNames(r);
+		String submitName = resP.parseHTMLSubmitName(r);
+		
+		QueryString qs = new QueryString();
+		qs.addOption("allbox", "on");
+		qs.addOption(submitName, "Terminübersicht erstellen");
+		
+		for (String s: cbNames) {
+			qs.addOption(s, s);
+		
+		}
+		
+		r = request.Post(postUri, qs.getQueryString());
+		
+		postUri = resP.parseHTMLFormActionUrl(r);
+		List<String> selectName = resP.parseHTMLSelectNames(r);
+		String filterName = resP.parseHTMLInputWithImageName(r, "button_filtern.gif");
+		
+		qs = new QueryString();
+		
+		for (String s: selectName) {
+			
+			//3 Ort
+			if (s.endsWith("3")) qs.addOption(s, "WONoSelectionString");
+			//7 Typ
+			if (s.endsWith("7")) qs.addOption(s, "WONoSelectionString");
+			//9 Status
+			if (s.endsWith("9")) qs.addOption(s, "2");// 2 Angmeldet
+			
+		}
+		
+		qs.addOption(filterName + ".x", "51");
+		qs.addOption(filterName + ".y", "3");
+		
+		r = request.Post(postUri, qs.getQueryString());
+
+		List<String> downloadUrls = resP.parseHTMLLinksWithTarget(r, "filedownload");
+		
+				
+		return request.Get(downloadUrls.get(1)); // 0 = Pdf
+				
+	}
+	
+	private String getFirstModulPage() throws Exception {
+		
+		String r = getFrameAfterLogin();
+		String frameUri = null;
 		
 		try {
 			frameUri = resP.parseHTMLLinkWithImage(r, "navi1_lernraum.gif");
@@ -139,6 +194,28 @@ public class Akadvh {
 		return  request.Get(frameUri);
 	}
 
+	private String getFrameAfterLogin() throws Exception {
+		
+		String r = request.Get("/cgi/WebObjects.dll/AKADFrontend");
+		
+		String loginUri = resP.parseHTMLFormActionUrl(r);
+		String frameUri = null;
+
+		try {
+			r = request.Post(loginUri, loginQueryString);
+			frameUri = resP.parseHTMLFrameSrc(r, "AKAD_inhalt");			
+		} catch (Exception e) {
+			throw new Exception("Benutername und/oder Passwort falsch");
+		}
+
+
+		r = request.Get(frameUri);
+		frameUri = resP.parseHTMLFrameSrc(r, "AKAD_header");
+			 
+		return request.Get(frameUri);
+		
+		
+	}
 
 	public static String getVersion() {
 		return version;

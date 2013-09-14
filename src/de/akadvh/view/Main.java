@@ -44,7 +44,8 @@ public class Main {
 		options.addOption("c", "console", false, "Consolenmodus");
 		options.addOption("v", "verbose", false, "Mehr Ausgabe");
 		options.addOption("m", "modul", true, "Modul");
-		options.addOption("n", "noten", false, "Notenuebersicht in CSV erstellen");
+		options.addOption("n", "noten", false, "Notenuebersicht erstellen");
+		options.addOption("t", "termin", false, "Terminuebersicht (angemeldete Module) downloaden");
 		options.addOption("version", false, "Version");
 		options.addOption("h", "help", false, "Hilfe");
 
@@ -75,6 +76,7 @@ public class Main {
 												cmd.getOptionValue("pass"),
 												cmd.getOptionValue("modul"),
 												cmd.hasOption("noten"),
+												cmd.hasOption("termin"),
 												cmd.hasOption("verbose"));
 				
 

@@ -1,7 +1,9 @@
 package de.akadvh;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -12,6 +14,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * 
@@ -58,6 +62,7 @@ public class Request {
 		connection.setRequestProperty( "Content-Type",
 		                               "application/x-www-form-urlencoded" );
 		connection.setRequestProperty( "Content-Length", String.valueOf(postVar.length()) );
+		if (!serverCookies.isEmpty()) connection.addRequestProperty("Cookie", serverCookies);
 
 		
 		
@@ -80,7 +85,9 @@ public class Request {
 		writer.close();
 		reader.close();
 	
-		CookieParser(connection);
+		if (serverCookies.isEmpty()) {
+			CookieParser(connection);	
+		}
 		
 		return responseBuff.toString();
 		
@@ -97,25 +104,59 @@ public class Request {
 		connection.setInstanceFollowRedirects(false);
 		if (!serverCookies.isEmpty()) connection.addRequestProperty("Cookie", serverCookies);
 		
+	
 		OutputStreamWriter writer = new OutputStreamWriter( connection.getOutputStream() );
 		writer.flush();
-
-
-		BufferedReader reader = new BufferedReader(
-		                          new InputStreamReader(connection.getInputStream()) );
-
 		
-		StringBuffer responseBuff = new StringBuffer();	
-		for ( String line; (line = reader.readLine()) != null; )
-		{
-		  responseBuff.append(line);
-		  responseBuff.append("\r");
+		
+		String contentType = connection.getContentType();
+		int contentLength = connection.getContentLength();
+		
+		if (contentType.startsWith("text/") || contentLength == -1) {
+			
+
+			BufferedReader reader = new BufferedReader(
+			                          new InputStreamReader(connection.getInputStream()) );
+	
+			
+			StringBuffer responseBuff = new StringBuffer();	
+			for ( String line; (line = reader.readLine()) != null; )
+			{
+			  responseBuff.append(line);
+			  responseBuff.append("\r");
+			}
+	
+			writer.close();
+			reader.close();
+			
+			return responseBuff.toString();
+		
+		} else {
+			
+			// Binary - Rückgabe als Base64 Codierter String
+			
+			InputStream raw = connection.getInputStream();
+			InputStream in = new BufferedInputStream(raw);
+			byte[] data = new byte[contentLength];
+			int bytesRead = 0;
+			int offset = 0;
+			
+			while (offset < contentLength) {
+				bytesRead = in.read(data, offset, data.length - offset);
+				if (bytesRead == -1)
+					break;
+				offset += bytesRead;
+			}
+			in.close();
+
+			if (offset != contentLength) {
+				throw new IOException("Only read " + offset + " bytes; Expected " + contentLength + " bytes");
+			}
+			
+			
+			return DatatypeConverter.printBase64Binary(data);
+			
 		}
-
-		writer.close();
-		reader.close();
-		
-		return responseBuff.toString();
 	}
 	
 	private void CookieParser(HttpURLConnection connection) {

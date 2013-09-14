@@ -2,10 +2,13 @@ package de.akadvh.view;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.Scanner;
+
+import javax.xml.bind.DatatypeConverter;
 
 import de.akadvh.Akadvh;
 import de.akadvh.AkadvhCredentials;
@@ -41,7 +44,7 @@ public class ConsoleView {
 	private String modulname;
 	private Scanner sc;
 	
-	public ConsoleView(String username, String password, String modulname, Boolean noten, Boolean verbose) {
+	public ConsoleView(String username, String password, String modulname, Boolean noten, Boolean termin, Boolean verbose) {
 
 		this.username = username;
 		this.password = password;
@@ -71,16 +74,16 @@ public class ConsoleView {
 			e1.printStackTrace();
 		}
 	    
-	    if (modulname == null && noten == false) {
-		    System.out.println("M für Modul, N für Notenübersicht: ");
+	    if (modulname == null && noten == false && termin == false) {
+		    System.out.println("M für Modul, N für Notenübersicht, T für Terminübersicht: ");
 		    this.todo = sc.nextLine();	    	
 	    } else if (noten == true) {
 	    	this.todo = "N";
+	    } else if (termin == true) {
+	    	this.todo = "T";
 	    } else {
 	    	this.todo = "M";
 	    }
- 
-
 		
 	    if (this.todo.equals("M")) {
 		   
@@ -133,7 +136,31 @@ public class ConsoleView {
 				System.exit(1);
 			}
 	
-	    } else {
+	    } else if (todo.equals("T")) {
+	    	
+	    	String filename = "Terminübersicht.xls";
+	    		    	
+	    	try {
+	    		
+		    	System.out.println("Erstelle Datei '" + filename + "' - Bitte warten...");
+	    		
+	    		String document = vh.holeTerminUebersicht();
+	    		
+	    		File file = new File(filename);				
+				
+	    		OutputStream writer = new FileOutputStream(file);
+	    		writer.write(DatatypeConverter.parseBase64Binary(document));
+	    		writer.flush();
+	    		writer.close();
+	    
+	    		
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				System.exit(1);
+			}
+	    	
+	    }
+	    else {
 	    	System.out.println("Nichts zu tun");	    	
 	    }
 	    

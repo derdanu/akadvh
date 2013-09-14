@@ -63,6 +63,21 @@ public class ResponseParser {
 	    
 	}
 	
+	public List<String> parseHTMLLinksWithTarget(String html, String target) {
+		
+		List<String> links = new ArrayList<String>();
+				
+	    Document doc = Jsoup.parse(html);
+		
+		Elements elements = doc.select("a[target=" + target + "]");
+		
+		for (Element e: elements) {
+			links.add(e.attr("href"));
+		}
+		
+	    return links;
+	    
+	}
 	
 	public String parseHTMLLinkWithImage(String html, String image) throws Exception {
 		
@@ -79,6 +94,68 @@ public class ResponseParser {
         }
         
         throw new Exception("Link nicht gefunden");
+	}
+	
+	public String parseHTMLInputWithImageName(String html, String image) throws Exception {
+		
+	    Document doc = Jsoup.parse(html);
+
+        Elements links = doc.select("input[type=image]");
+
+        for (Element e : links) {
+               
+        	if (e.attr("src").contains(image)) {
+        		return e.attr("name");
+        	}
+
+        }
+        
+        throw new Exception("Name nicht gefunden");
+	}
+	
+	public List<String> parseHTMLCheckboxNames(String html) {
+		
+		List<String> cbNames = new ArrayList<String>();
+		
+		Document doc = Jsoup.parse(html);
+		
+		Elements cb = doc.select("input[type=checkbox]");
+		
+		for (Element e: cb) {
+			
+			cbNames.add(e.attr("name"));
+			
+		}
+		
+		return cbNames;
+	}
+	
+	
+	public List<String> parseHTMLSelectNames(String html) {
+		
+		List<String> selectNames = new ArrayList<String>();
+		
+		Document doc = Jsoup.parse(html);
+		
+		Elements select = doc.select("select");
+		
+		for (Element e: select) {
+			
+			selectNames.add(e.attr("name"));
+			
+		}
+		
+		return selectNames;
+	}
+	
+	public String parseHTMLSubmitName(String html) {
+		
+		Document doc = Jsoup.parse(html);
+		
+		Element cb = doc.select("input[type=submit]").first();
+		
+		return cb.attr("name");
+
 	}
 	
 	public List<String> parseModulePages(String html) {
