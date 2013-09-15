@@ -41,6 +41,7 @@ public class Request {
 
 	private URL baseUrl;
 	private String serverCookies;
+	private String userAgent = new String("Mozilla/5.0 (X11; Linux x86_64; rv:23.0) Gecko/20100101 Firefox/23.0 Iceweasel/23.0");
 	
 	/**
 	 * 
@@ -68,7 +69,7 @@ public class Request {
 		URL url = new URL(this.baseUrl + uri);
 		
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-		connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 6.0; pl; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2");
+		connection.setRequestProperty("User-Agent", this.userAgent);
 		connection.setRequestMethod( "POST" );
 		connection.setInstanceFollowRedirects(false);
 		connection.setDoInput( true );
@@ -121,6 +122,7 @@ public class Request {
 		URL url = new URL(this.baseUrl + uri);
 		
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		connection.setRequestProperty("User-Agent", this.userAgent);
 		connection.setRequestMethod( "GET" );
 		connection.setDoInput( true );
 		connection.setDoOutput( true );
