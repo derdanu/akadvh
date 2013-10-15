@@ -3,7 +3,6 @@ AkadVH
 
 AkadVH Java Library und Console + GUI Client zum bequemen Abrufen der Noten
 
-Download des aktuellen Builds von http://54.211.255.30/akadvh/akadvh_latest.jar
 
 GUI
 ==
