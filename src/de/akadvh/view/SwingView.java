@@ -131,7 +131,7 @@ public class SwingView {
 		
 		
 		frmAkadVhc = new JFrame();
-		frmAkadVhc.setTitle("AKAD VH (C) 2013 Daniel Falkner");
+		frmAkadVhc.setTitle("AKAD VH (C) 2013/2014 Daniel Falkner");
 		frmAkadVhc.setBounds(100, 100, 608, 414);
 		frmAkadVhc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmAkadVhc.setVisible(true);
@@ -470,13 +470,21 @@ public class SwingView {
 		mntmVersion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(frmAkadVhc,
-		    		    "Version: " + Akadvh.getVersion() + "\n" + "(C) 2013 Daniel Falkner",
+		    		    "Version: " + Akadvh.getVersion() + "\n" + "(C) 2013/2014 Daniel Falkner",
 		    		    "Version",
 		    		    JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		mnAktion.add(mntmVersion);
 		
+		JMenuItem mntmExit = new JMenuItem("Beenden");
+		mntmExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		mnAktion.add(mntmExit);
+
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
 		menuBar.add(separator);
