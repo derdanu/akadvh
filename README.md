@@ -5,6 +5,8 @@ AkadVH Java Library und Console + GUI Client zum bequemen Abrufen der Noten
 
 <b>ACHTUNG: Die AkadVH ist nicht mehr erreichbar, dieser Code funktioniert somit nicht mehr. </b>
 
+Evtl. ist https://github.com/derdanu/akad-campus nützlich.
+
 GUI
 ==
 
